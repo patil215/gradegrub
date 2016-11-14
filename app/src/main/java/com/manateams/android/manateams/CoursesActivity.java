@@ -48,22 +48,6 @@ public class CoursesActivity extends ActionBarActivity {
         setupDrawer();
         selectItem(0);
         dataManager = new DataManager(this);
-        //TODO Fine tune these values, see https://github.com/hotchemi/Android-Rate
-        AppRate.with(this)
-                .setInstallDays(1)
-                .setLaunchTimes(3)
-                .setRemindInterval(3)
-                .setOnClickButtonListener(new OnClickButtonListener() {
-                    @Override
-                    public void onClickButton(int which) {
-                        if (which == BUTTON_POSITIVE) {
-                            sendShareIntent();
-                        }
-                    }
-                })
-                .monitor();
-        
-        AppRate.showRateDialogIfMeetsConditions(this);
     }
 
     @Override
