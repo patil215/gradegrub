@@ -28,9 +28,8 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
     protected Course[] doInBackground(String... params) {
         final String username = params[0];
         final String password = params[1];
-        final String studentId = params[2];
-        final String TEAMSuser = params[3];
-        final String TEAMSpass = params[4];
+        final String TEAMSuser = params[2];
+        final String TEAMSpass = params[3];
 
 
         final DataManager dataManager = new DataManager(context);
@@ -53,7 +52,7 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
 
             // Get the appropriate user identification info
             final String userIdentification;
-            final String newUserIdentification = retriever.getNewUserIdentification(username, password, studentId, TEAMSuser, TEAMSpass, cookie, userType);
+            final String newUserIdentification = retriever.getNewUserIdentification(username, password, username.substring(1, username.length()), TEAMSuser, TEAMSpass, cookie, userType);
             userIdentification = newUserIdentification;
             dataManager.setUserIdentification(newUserIdentification);
 

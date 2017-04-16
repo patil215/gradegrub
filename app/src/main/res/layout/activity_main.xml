@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -55,14 +56,6 @@
                     android:text="@string/text_login_instructions"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/text_login_quote_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/text_login_quote"
-                    android:text="@string/text_login_quote_author"
-                    android:textSize="16sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -91,23 +84,13 @@
                     android:padding="18dp"
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edittext_login_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edittext_login_password"
-                    android:hint="@string/hint_login_id"
-                    android:inputType="number"
-                    android:padding="18dp"
-                    android:singleLine="true" />
-
                 <Button
                     android:id="@+id/button_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/edittext_login_id"
+                    android:layout_below="@id/edittext_login_password"
                     android:onClick="onLoginClick"
                     android:padding="18dp"
                     android:text="@string/button_login" />
