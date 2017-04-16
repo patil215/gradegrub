@@ -47,10 +47,9 @@ public class AssignmentLoadTask extends AsyncTask<String, String, ClassGrades[]>
     protected ClassGrades[] doInBackground(String... params) {
         final String username = params[0];
         final String password = params[1];
-        final String studentID = params[2];
-        courseIndex = Integer.valueOf(params[3]);
-        final String TEAMSuser = params[4];
-        final String TEAMSpass = params[5];
+        courseIndex = Integer.valueOf(params[2]);
+        final String TEAMSuser = params[3];
+        final String TEAMSpass = params[4];
 
         final DataManager dataManager = new DataManager(context);
         final TEAMSGradeRetriever retriever = new TEAMSGradeRetriever();
@@ -71,7 +70,7 @@ public class AssignmentLoadTask extends AsyncTask<String, String, ClassGrades[]>
 
             // Get the appropriate user identification info
             final String userIdentification;
-            final String newUserIdentification = retriever.getNewUserIdentification(username, password, studentID, TEAMSuser, TEAMSpass, cookie, userType);
+            final String newUserIdentification = retriever.getNewUserIdentification(username, password, username.substring(1, username.length()), TEAMSuser, TEAMSpass, cookie, userType);
             userIdentification = newUserIdentification;
             dataManager.setUserIdentification(newUserIdentification);
 

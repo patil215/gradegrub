@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
 
     private String username;
     private String password;
-    private String studentId;
     private String TEAMSuser = "";
     private String TEAMSpass = "";
 
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
     private RelativeLayout loginLoadingLayout;
     private TextView usernameText;
     private TextView passwordText;
-    private TextView studentIdText;
     private Button loginButton;
 
     private DataManager dataManager;
@@ -73,10 +71,9 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
             startActivity(intent);
             finish();
         } else {
-            if (dataManager.getUsername() != null && dataManager.getPassword() != null && dataManager.getStudentId() != null) {
+            if (dataManager.getUsername() != null && dataManager.getPassword() != null) {
                 usernameText.setText(dataManager.getUsername());
                 passwordText.setText(dataManager.getPassword());
-                studentIdText.setText(dataManager.getStudentId());
                 login();
             }
         }
@@ -108,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
         loginLoadingLayout = (RelativeLayout) findViewById(R.id.layout_loading);
         usernameText = (TextView) findViewById(R.id.edittext_login_username);
         passwordText = (TextView) findViewById(R.id.edittext_login_password);
-        studentIdText = (TextView) findViewById(R.id.edittext_login_id);
         loginButton = (Button) findViewById(R.id.button_login);
     }
 
@@ -134,13 +130,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
         tries = 0;
         dataManager.invalidateCookie();
         if (!loggingIn) {
-            if (usernameText.getText().toString().length() > 0 && passwordText.getText().toString().length() > 0 && studentIdText.getText().toString().length() > 0) {
+            if (usernameText.getText().toString().length() > 0 && passwordText.getText().toString().length() > 0) {
                 loginTextLayout.setVisibility(View.GONE);
                 loggingIn = true;
                 loginLoadingLayout.setVisibility(View.VISIBLE);
                 username = usernameText.getText().toString();
                 password = passwordText.getText().toString();
-                studentId = studentIdText.getText().toString();
                 // Annoying programmatic UI code
                 usernameText.setFocusable(false);
                 usernameText.setFocusableInTouchMode(false);
@@ -150,15 +145,11 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
                 passwordText.setFocusableInTouchMode(false);
                 passwordText.setClickable(false);
                 passwordText.setEnabled(false);
-                studentIdText.setFocusable(false);
-                studentIdText.setFocusableInTouchMode(false);
-                studentIdText.setClickable(false);
-                studentIdText.setEnabled(false);
                 loginButton.setFocusable(false);
                 loginButton.setFocusableInTouchMode(false);
                 loginButton.setClickable(false);
                 loginButton.setEnabled(false);
-                new CourseLoadTask(this, this).execute(username, password, studentId,"","");
+                new CourseLoadTask(this, this).execute(username, password,"","");
             } else {
                 Toast.makeText(this, getString(R.string.toast_fill_info), Toast.LENGTH_SHORT).show();
             }
@@ -175,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
         if(courses != null) {
             Utils.setAlarms(Constants.INTERVAL_GRADE_SCRAPE, this);
             dataManager.setCourseGrades(courses);
-            dataManager.setCredentials(username, password, studentId, TEAMSuser, TEAMSpass);
+            dataManager.setCredentials(username, password, username.substring(1, username.length()), TEAMSuser, TEAMSpass);
             dataManager.setOverallGradesLastUpdated();
             Intent gradeScrape = new Intent(this, GradeScrapeService.class);
             this.stopService(gradeScrape);
@@ -199,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
                         loggingIn = true;
                         TEAMSuser = ((EditText)v.findViewById(R.id.backupusername)).getText().toString();
                          TEAMSpass = ((EditText)v.findViewById(R.id.backuppassword)).getText().toString();
-                         new CourseLoadTask(MainActivity.this, getApplicationContext()).execute(username, password, studentId, TEAMSuser, TEAMSpass);
+                         new CourseLoadTask(MainActivity.this, getApplicationContext()).execute(username, password, TEAMSuser, TEAMSpass);
                     }
                 });
                 alert.show();
@@ -207,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
             else{
                 username = "";
                 password = "";
-                studentId = "";
                 usernameText.setFocusable(true);
                 usernameText.setFocusableInTouchMode(true);
                 usernameText.setClickable(true);
@@ -216,10 +206,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
                 passwordText.setFocusableInTouchMode(true);
                 passwordText.setClickable(true);
                 passwordText.setEnabled(true);
-                studentIdText.setFocusable(true);
-                studentIdText.setFocusableInTouchMode(true);
-                studentIdText.setClickable(true);
-                studentIdText.setEnabled(true);
                 loginButton.setFocusable(false);
                 loginButton.setFocusableInTouchMode(false);
                 loginButton.setClickable(true);
